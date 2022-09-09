@@ -1,5 +1,7 @@
 package com.shangzheng.staybooking.controller;
 
+import com.shangzheng.staybooking.exception.GCSUploadException;
+import com.shangzheng.staybooking.exception.StayNotExistException;
 import com.shangzheng.staybooking.exception.UserAlreadyExistException;
 import com.shangzheng.staybooking.exception.UserNotExistException;
 import org.springframework.http.HttpStatus;
@@ -18,4 +20,16 @@ public class CustomExceptionHandler {
     public final ResponseEntity<String> handleUserNotExistExceptions(Exception ex, WebRequest request) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
     }
+
+    @ExceptionHandler(StayNotExistException.class)
+    public final ResponseEntity<String> handleStayNotExistExceptions(Exception ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(GCSUploadException.class)
+    public final ResponseEntity<String> handleGCSUploadExceptions(Exception ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
 }
