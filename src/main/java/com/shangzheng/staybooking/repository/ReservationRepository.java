@@ -10,11 +10,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface StayRepository extends JpaRepository<Stay, Long> {
-    List<Stay> findByHost(User user);
+public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+    List<Reservation> findByGuest(User guest);
 
-    Stay findByIdAndHost(Long id, User host);
+    List<Reservation> findByStay(Stay stay);
 
-    List<Stay> findByIdInAndGuestNumberGreaterThanEqual(List<Long> ids, int guestNumber);
+    Reservation findByIdAndGuest(Long id, User guest);
 
+    List<Reservation> findByStayAndCheckoutDateAfter(Stay stay, LocalDate date);
 }

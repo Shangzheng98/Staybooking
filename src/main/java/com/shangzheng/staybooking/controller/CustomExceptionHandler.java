@@ -1,9 +1,6 @@
 package com.shangzheng.staybooking.controller;
 
-import com.shangzheng.staybooking.exception.GCSUploadException;
-import com.shangzheng.staybooking.exception.StayNotExistException;
-import com.shangzheng.staybooking.exception.UserAlreadyExistException;
-import com.shangzheng.staybooking.exception.UserNotExistException;
+import com.shangzheng.staybooking.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,6 +27,43 @@ public class CustomExceptionHandler {
     public final ResponseEntity<String> handleGCSUploadExceptions(Exception ex, WebRequest request) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(InvalidSearchDateException.class)
+    public final ResponseEntity<String> handleInvalidSearchDateExceptions(Exception ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(GeoCodingException.class)
+    public final ResponseEntity<String> handleGeoCodingExceptions(Exception ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(InvalidStayAddressException.class)
+    public final ResponseEntity<String> handleInvalidStayAddressExceptions(Exception ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ReservationCollisionException.class)
+    public final ResponseEntity<String> handleReservationCollisionExceptions(Exception ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(InvalidReservationDateException.class)
+    public final ResponseEntity<String> handleInvalidReservationDateExceptions(Exception ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ReservationNotFoundException.class)
+    public final ResponseEntity<String> handleReservationNotFoundExceptions(Exception ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(StayDeleteException.class)
+    public final ResponseEntity<String> handleStayDeleteExceptions(Exception ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+    }
+
+
 
 
 }

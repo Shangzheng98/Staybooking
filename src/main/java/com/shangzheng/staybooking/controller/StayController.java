@@ -1,7 +1,9 @@
 package com.shangzheng.staybooking.controller;
 
+import com.shangzheng.staybooking.model.Reservation;
 import com.shangzheng.staybooking.model.Stay;
 import com.shangzheng.staybooking.model.User;
+import com.shangzheng.staybooking.service.ReservationService;
 import com.shangzheng.staybooking.service.StayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +15,12 @@ import java.util.List;
 @RestController
 public class StayController {
     private StayService stayService;
+    private ReservationService reservationService;
 
     @Autowired
-    public StayController(StayService stayService) {
+    public StayController(StayService stayService, ReservationService reservationService) {
         this.stayService = stayService;
+        this.reservationService = reservationService;
     }
 
     @GetMapping(value = "/stays")
@@ -52,6 +56,11 @@ public class StayController {
     public void deleteStay(@PathVariable Long stayId, Principal principal) {
         stayService.delete(stayId, principal.getName());
     }
+    @GetMapping(value = "/stays/reservations/{stayId}")
+    public List<Reservation> listReservations(@PathVariable Long stayId) {
+        return reservationService.listByStay(stayId);
+    }
+
 
 
 
